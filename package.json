@@ -4,10 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "compile": "truffle compile",
+    "migrate": "truffle migrate",
+    "ganache": "ganache -p 7545 --chain.chainId 1337 --chain.networkId 1337",
+    "client": "npm run dev --prefix client",
+    "build:client": "npm run build --prefix client",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "commonjs",
+  "devDependencies": {
+    "ganache": "^7.9.2",
+    "truffle": "^5.11.5"
+  }
 }
