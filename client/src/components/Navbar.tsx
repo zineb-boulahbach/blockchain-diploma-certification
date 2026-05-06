@@ -1,9 +1,10 @@
 import { NavLink } from 'react-router-dom';
 import { WalletButton } from './WalletButton';
+import { IconBook, IconCap, IconHome, IconSearch, IconShield } from './Icon';
 
 const linkClass = ({ isActive }: { isActive: boolean }) =>
   [
-    'rounded-md px-3 py-2 text-sm font-medium transition-colors',
+    'inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors',
     isActive
       ? 'bg-violet-100 text-violet-900 dark:bg-violet-900/40 dark:text-violet-100'
       : 'text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800',
@@ -25,18 +26,23 @@ export function Navbar() {
           </div>
           <nav className="flex flex-wrap gap-1">
             <NavLink to="/" end className={linkClass}>
+              <IconHome className="text-base" />
               Accueil
             </NavLink>
             <NavLink to="/admin" className={linkClass}>
+              <IconShield className="text-base" />
               Administration
             </NavLink>
             <NavLink to="/student" className={linkClass}>
+              <IconCap className="text-base" />
               Espace étudiant
             </NavLink>
             <NavLink to="/verify" className={linkClass}>
+              <IconSearch className="text-base" />
               Vérification
             </NavLink>
             <NavLink to="/guide" className={linkClass}>
+              <IconBook className="text-base" />
               Guide
             </NavLink>
           </nav>

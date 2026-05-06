@@ -13,6 +13,7 @@ import { txExplorerUrl } from '../lib/explorer';
 import { useAdminAccess } from '../hooks/useAdminAccess';
 import { useWeb3 } from '../context/Web3Context';
 import { Modal } from '../components/Modal';
+import { IconPlus, IconSearch } from '../components/Icon';
 
 export function AdminGestionPage() {
   const { status, chainId } = useWeb3();
@@ -160,9 +161,10 @@ export function AdminGestionPage() {
         <h1 className="text-lg font-bold uppercase tracking-wide">Tableau de bord de gestion</h1>
         <Link
           to="/admin/emit"
-          className="border-2 border-dashed border-slate-900 bg-slate-900 px-3 py-1.5 text-xs font-bold uppercase text-white dark:border-white dark:bg-white dark:text-slate-900"
+          className="inline-flex items-center gap-2 rounded-lg bg-violet-700 px-4 py-2 text-xs font-semibold uppercase text-white shadow-sm transition hover:bg-violet-800 dark:bg-violet-600 dark:hover:bg-violet-500"
         >
-          + Émettre Nouveau
+          <IconPlus className="text-sm" />
+          Émettre Nouveau
         </Link>
       </div>
 
@@ -173,20 +175,21 @@ export function AdminGestionPage() {
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="min-w-[200px] flex-1 border-2 border-dashed border-slate-300 px-2 py-1 dark:border-slate-600 dark:bg-slate-950"
+            className="min-w-[200px] flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm shadow-sm outline-none ring-violet-500 focus:ring-2 dark:border-slate-700 dark:bg-slate-950"
           />
         </label>
         <button
           type="button"
-          className="border-2 border-dashed border-slate-400 px-3 py-1 font-bold dark:border-slate-500"
+          className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-semibold shadow-sm hover:border-violet-300 hover:bg-violet-50 dark:border-slate-700 dark:bg-slate-900 dark:hover:border-violet-700 dark:hover:bg-slate-800"
           aria-label="Rechercher"
         >
-          Q
+          <IconSearch className="text-base" />
+          Rechercher
         </button>
         <button
           type="button"
           onClick={() => load()}
-          className="text-xs underline"
+          className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold shadow-sm transition hover:border-violet-300 hover:bg-violet-50 dark:border-slate-700 dark:bg-slate-900 dark:hover:border-violet-700 dark:hover:bg-slate-800"
         >
           {loadingList ? '…' : 'Rafraîchir'}
         </button>
@@ -253,9 +256,9 @@ export function AdminGestionPage() {
                       <button
                         type="button"
                         onClick={() => setRevokeTarget(d)}
-                        className="border border-dashed border-red-500 px-2 py-0.5 text-xs font-bold uppercase text-red-800 dark:text-red-300"
+                        className="rounded border border-red-300 bg-red-50 px-2 py-1 text-xs font-semibold uppercase text-red-700 hover:bg-red-100 dark:border-red-900 dark:bg-red-950/30 dark:text-red-300 dark:hover:bg-red-950/50"
                       >
-                        Revoke
+                        Révoquer
                       </button>
                     ) : (
                       <span className="text-xs text-slate-400">—</span>

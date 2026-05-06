@@ -2,6 +2,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { shortenAddress } from '../lib/format';
 import { useWeb3 } from '../context/Web3Context';
 import { WalletButton } from './WalletButton';
+import { IconBook, IconCap, IconHome, IconSearch } from './Icon';
 
 export function StudentWireHeader() {
   const { account, status } = useWeb3();
@@ -16,19 +17,29 @@ export function StudentWireHeader() {
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-3">
         <Link
           to="/"
-          className="rounded border border-dashed border-slate-400 px-2 py-1 text-xs font-bold uppercase tracking-wide dark:border-slate-500"
+          className="inline-flex items-center gap-2 rounded border border-dashed border-slate-400 px-2 py-1 text-xs font-bold uppercase tracking-wide dark:border-slate-500"
         >
-          Logo EMSI
+          <IconHome className="text-sm" />
+          EMSI
         </Link>
         <nav className="flex flex-wrap items-center gap-6 text-sm">
           <NavLink to="/student" className={linkCls}>
-            Mes Diplômes
+            <span className="inline-flex items-center gap-2">
+              <IconCap className="text-base" />
+              Mes Diplômes
+            </span>
           </NavLink>
           <NavLink to="/verify" className={linkCls}>
-            Vérifier
+            <span className="inline-flex items-center gap-2">
+              <IconSearch className="text-base" />
+              Vérifier
+            </span>
           </NavLink>
           <Link to="/guide" className="text-slate-600 hover:underline dark:text-slate-400">
-            Aide
+            <span className="inline-flex items-center gap-2">
+              <IconBook className="text-base" />
+              Aide
+            </span>
           </Link>
         </nav>
         <div className="flex items-center gap-2">

@@ -11,6 +11,7 @@ import { gatewayUrl } from '../lib/ipfs';
 import { fmtDateFRDigits, formatRelativeFr } from '../lib/format';
 import { useWeb3 } from '../context/Web3Context';
 import { WalletButton, WalletErrorNotice } from '../components/WalletButton';
+import { IconCap, IconDownload, IconShare } from '../components/Icon';
 
 export function StudentPage() {
   const { account, status } = useWeb3();
@@ -115,10 +116,8 @@ export function StudentPage() {
             className="flex flex-col border-2 border-dashed border-slate-400 bg-white p-5 dark:border-slate-600 dark:bg-slate-900"
           >
             <div className="flex items-start gap-3">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center border-2 border-dashed border-slate-300 text-xs dark:border-slate-600">
-                ICON
-                <br />
-                DIPLOMA
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded border-2 border-dashed border-slate-300 text-slate-700 dark:border-slate-600 dark:text-slate-200">
+                <IconCap className="text-2xl" title="Diplôme" />
               </div>
               <div className="min-w-0 flex-1">
                 <p className="text-xs font-bold uppercase text-slate-500">EMSI</p>
@@ -143,24 +142,26 @@ export function StudentPage() {
             <div className="mt-6 flex flex-wrap gap-2 border-t border-dashed border-slate-300 pt-4 dark:border-slate-600">
               <Link
                 to={`/diploma/${encodeURIComponent(d.diplomaHash)}`}
-                className="border-2 border-dashed border-slate-400 px-3 py-1 text-xs font-bold uppercase hover:bg-slate-50 dark:border-slate-500 dark:hover:bg-slate-800"
+                className="inline-flex items-center gap-2 border-2 border-dashed border-slate-400 px-3 py-1 text-xs font-bold uppercase hover:bg-slate-50 dark:border-slate-500 dark:hover:bg-slate-800"
               >
-                Voir
+                Voir →
               </Link>
               <button
                 type="button"
                 onClick={() => setShare(d)}
-                className="border-2 border-dashed border-slate-400 px-3 py-1 text-xs font-bold uppercase hover:bg-slate-50 dark:border-slate-500 dark:hover:bg-slate-800"
+                className="inline-flex items-center gap-2 border-2 border-dashed border-slate-400 px-3 py-1 text-xs font-bold uppercase hover:bg-slate-50 dark:border-slate-500 dark:hover:bg-slate-800"
               >
-                Share
+                <IconShare className="text-sm" />
+                Partager
               </button>
               <a
                 href={gatewayUrl(d.ipfsCID.split(':').pop() ?? d.ipfsCID)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border-2 border-dashed border-slate-400 px-3 py-1 text-xs font-bold uppercase hover:bg-slate-50 dark:border-slate-500 dark:hover:bg-slate-800"
+                className="inline-flex items-center gap-2 border-2 border-dashed border-slate-400 px-3 py-1 text-xs font-bold uppercase hover:bg-slate-50 dark:border-slate-500 dark:hover:bg-slate-800"
               >
-                DL
+                <IconDownload className="text-sm" />
+                PDF
               </a>
             </div>
           </article>

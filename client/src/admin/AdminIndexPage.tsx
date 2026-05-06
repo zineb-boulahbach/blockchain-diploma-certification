@@ -3,6 +3,7 @@ import { useAdminAccess } from '../hooks/useAdminAccess';
 import { isConfigured } from '../lib/config';
 import { useWeb3 } from '../context/Web3Context';
 import { WalletButton, WalletErrorNotice } from '../components/WalletButton';
+import { IconArrowLeft, IconShield } from '../components/Icon';
 
 export function AdminIndexPage() {
   const { status, account } = useWeb3();
@@ -39,13 +40,17 @@ export function AdminIndexPage() {
   return (
     <div className="mx-auto max-w-lg border-2 border-dashed border-slate-400 bg-white p-8 shadow-sm dark:border-slate-600 dark:bg-slate-900">
       <p className="mb-4 text-center text-xs">
-        <Link to="/" className="font-semibold text-violet-700 underline hover:no-underline dark:text-violet-400">
-          ← Retour accueil
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-violet-700 shadow-sm transition hover:border-violet-300 hover:bg-violet-50 dark:border-slate-700 dark:bg-slate-900 dark:text-violet-400 dark:hover:border-violet-600 dark:hover:bg-slate-800"
+        >
+          <IconArrowLeft className="text-base" />
+          Retour accueil
         </Link>
       </p>
       <h1 className="text-center text-lg font-bold uppercase tracking-wide">Administration</h1>
-      <div className="mx-auto mt-6 flex h-16 w-16 items-center justify-center rounded border-2 border-dashed border-slate-400 text-2xl dark:border-slate-500">
-        ICO
+      <div className="mx-auto mt-6 flex h-16 w-16 items-center justify-center rounded border-2 border-dashed border-slate-400 text-2xl text-violet-700 dark:border-slate-500 dark:text-violet-400">
+        <IconShield className="text-3xl" title="Administration sécurisée" />
       </div>
       <p className="mt-6 text-center text-sm leading-relaxed text-slate-700 dark:text-slate-300">
         Connectez votre portefeuille pour gérer les titres

@@ -11,6 +11,7 @@ import { shortenAddress } from '../lib/format';
 import { useAdminAccess } from '../hooks/useAdminAccess';
 import { useWeb3 } from '../context/Web3Context';
 import { Modal } from '../components/Modal';
+import { IconBook, IconShield } from '../components/Icon';
 
 export function AdminEmitPage() {
   const navigate = useNavigate();
@@ -216,10 +217,13 @@ export function AdminEmitPage() {
             className="hidden"
             onChange={(e) => void onDrop(e.target.files?.[0] ?? null)}
           />
-          <span className="text-3xl">⬆</span>
+          <IconShield className="text-3xl text-violet-700 dark:text-violet-400" title="Upload sécurisé" />
           <p className="mt-2 text-center text-sm">
             Glissez-déposez le diplôme PDF ici ou{' '}
-            <span className="font-semibold underline">Parcourir les fichiers</span>
+            <span className="inline-flex items-center gap-2 font-semibold text-violet-700 underline dark:text-violet-400">
+              <IconBook className="text-base" />
+              Parcourir les fichiers
+            </span>
           </p>
         </div>
         {file && fileHash ? (

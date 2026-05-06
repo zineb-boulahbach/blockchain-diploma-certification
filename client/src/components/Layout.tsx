@@ -5,18 +5,7 @@ import { StudentWireHeader } from './StudentWireHeader';
 
 export function Layout() {
   const { pathname } = useLocation();
-  const isVerify = pathname === '/verify';
   const isStudentArea = pathname.startsWith('/student') || pathname.startsWith('/diploma');
-
-  if (isVerify) {
-    return (
-      <div className="min-h-screen bg-[#e8edf2] font-mono text-slate-900 dark:bg-slate-950 dark:text-slate-100">
-        <div key={pathname} className="animate-page-transition">
-          <Outlet />
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="flex min-h-screen flex-col bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
