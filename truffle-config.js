@@ -41,10 +41,77 @@
  * https://trufflesuite.com/docs/truffle/getting-started/using-the-truffle-dashboard/
  */
 
-// require('dotenv').config();
-// const { MNEMONIC, PROJECT_ID } = process.env;
+const fs = require("fs");
+const path = require("path");
+const dotenv = require("dotenv");
 
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
+/**
+ * Load `.env` at repo root and `client/.env`. Later files only fill keys that
+ * are missing or empty — so Truffle picks up `DEPLOYER_PRIVATE_KEY` /
+ * `SEPOLIA_RPC_URL` even when they live next to the Vite env vars.
+ */
+function mergeEnvFiles() {
+  const files = [
+    path.join(__dirname, ".env"),
+    path.join(__dirname, "client", ".env"),
+  ];
+  for (const file of files) {
+    if (!fs.existsSync(file)) continue;
+    let raw = fs.readFileSync(file, "utf8");
+    if (raw.charCodeAt(0) === 0xfeff) raw = raw.slice(1);
+    const parsed = dotenv.parse(raw);
+    for (const [key, value] of Object.entries(parsed)) {
+      const cur = process.env[key];
+      if (cur === undefined || cur === "") {
+        process.env[key] = value;
+      }
+    }
+  }
+}
+mergeEnvFiles();
+
+const ganache = require("ganache");
+const HDWalletProvider = require("@truffle/hdwallet-provider");
+const { RetryingJsonRpcProvider } = require("./scripts/retrying-json-rpc-provider");
+const testProvider = ganache.provider({
+  logging: { quiet: true },
+  chain: { chainId: 1337, networkId: 1337 },
+});
+
+function normalizePrivateKey(key) {
+  const t = String(key ?? "").trim();
+  if (!t) return t;
+  return t.startsWith("0x") ? t : `0x${t}`;
+}
+
+function createSepoliaProvider() {
+  mergeEnvFiles();
+  const rpcUrl = String(process.env.SEPOLIA_RPC_URL ?? "").trim();
+  const pk = normalizePrivateKey(process.env.DEPLOYER_PRIVATE_KEY);
+  if (!rpcUrl || !pk) {
+    throw new Error(
+      "Missing SEPOLIA_RPC_URL or DEPLOYER_PRIVATE_KEY in .env (root or client/.env) for Sepolia deployment."
+    );
+  }
+  const httpProvider = new RetryingJsonRpcProvider(rpcUrl, {
+    maxRetries: 8,
+    timeoutMs: 90000,
+  });
+  const wallet = new HDWalletProvider({
+    privateKeys: [pk],
+    providerOrUrl: httpProvider,
+    chainId: 11155111,
+    pollingInterval: 12000,
+  });
+  // Truffle's connection check reads `provider.host`; HDWalletProvider omits it → "network at undefined".
+  try {
+    const u = new URL(rpcUrl);
+    wallet.host = u.host;
+  } catch {
+    wallet.host = httpProvider.host || "sepolia-rpc";
+  }
+  return wallet;
+}
 
 module.exports = {
   /**
@@ -68,6 +135,18 @@ module.exports = {
       host: "127.0.0.1",     // Localhost (default: none)
       port: 7545,            // Standard Ethereum port (default: none)
       network_id: "*",       // Any network (default: none)
+     },
+     test: {
+      provider: () => testProvider,
+      network_id: "*",
+     },
+     sepolia: {
+      provider: () => createSepoliaProvider(),
+      network_id: 11155111,
+      confirmations: 1,
+      timeoutBlocks: 200,
+      skipDryRun: true,
+      networkCheckTimeout: 90000,
      },
     //
     // An additional network, but with some advanced options…

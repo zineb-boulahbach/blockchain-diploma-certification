@@ -28,11 +28,28 @@ const WIREFRAMES: WireframeRow[] = [
 export function GuidePage() {
   return (
     <div className="prose prose-slate mx-auto max-w-2xl dark:prose-invert">
-      <h1>Guide rapide</h1>
+      <h1>Guide rapide et demo jury</h1>
       <p>
         Ce prototype illustre la certification de diplômes sur une blockchain EVM (Sepolia ou Ganache local)
         avec MetaMask.
       </p>
+      <h2>Scenario de demonstration (5-7 minutes)</h2>
+      <ol className="not-prose list-decimal space-y-2 pl-5 text-sm">
+        <li>Presenter la page d'accueil et le role des trois espaces (Admin, Etudiant, Verification).</li>
+        <li>
+          Dans <strong>Administration</strong>, emettre un diplome test (PDF + donnees etudiant) puis signer la
+          transaction MetaMask.
+        </li>
+        <li>
+          Ouvrir <strong>Gestion</strong> pour prouver que l'enregistrement est visible on-chain avec hash/tx.
+        </li>
+        <li>
+          Ouvrir <strong>Espace etudiant</strong> avec le wallet cible pour montrer la recuperation des diplomes.
+        </li>
+        <li>
+          Dans <strong>Verification</strong>, tester un cas authentique puis un cas non trouve (ou revoque).
+        </li>
+      </ol>
       <h2>Correspondance maquettes (fichiers PNG Aspose)</h2>
       <ol className="not-prose list-decimal space-y-2 pl-5 text-sm">
         {WIREFRAMES.map((w) => (
@@ -63,6 +80,9 @@ export function GuidePage() {
       </ul>
       <p>
         <Link to="/verify">→ Portail de vérification</Link>
+      </p>
+      <p>
+        <Link to="/admin/emit">→ Commencer la demo (Emission)</Link>
       </p>
       <p>
         <Link to="/">← Accueil</Link>

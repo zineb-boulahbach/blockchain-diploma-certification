@@ -4,18 +4,24 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "setup": "npm install && npm install --prefix client",
     "compile": "truffle compile",
     "migrate": "truffle migrate",
+    "migrate:sepolia": "truffle migrate --network sepolia",
+    "deploy:sepolia": "truffle migrate --network sepolia --reset",
     "ganache": "ganache -p 7545 --chain.chainId 1337 --chain.networkId 1337",
     "client": "npm run dev --prefix client",
     "build:client": "npm run build --prefix client",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "truffle test --network test",
+    "test:contracts": "truffle test --network test"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "@truffle/hdwallet-provider": "^2.1.15",
+    "dotenv": "^17.4.2",
     "ganache": "^7.9.2",
     "truffle": "^5.11.5"
   }
